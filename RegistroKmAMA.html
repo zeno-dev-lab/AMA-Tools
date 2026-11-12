@@ -1,0 +1,412 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Registro Km AMA</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+/* Layout: intestazione, tre totali, poi modulo a sinistra e registro a destra (una colonna sul telefono). */
+:root{
+  --bg:#f4f6f6; --surface:#ffffff; --ink:#17282a; --muted:#5b6d6f; --line:#d6dfdf;
+  --accent:#1d6b66; --accent-ink:#ffffff; --accent-soft:#dcefed;
+  --warn:#a3471b; --warn-soft:#f8e6dc;
+  --font:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1819; --surface:#162224; --ink:#e6efef; --muted:#9bb0b1; --line:#2a3b3d;
+    --accent:#5cc1b9; --accent-ink:#072220; --accent-soft:#1b3a38;
+    --warn:#f0a77f; --warn-soft:#3b2519; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1819; --surface:#162224; --ink:#e6efef; --muted:#9bb0b1; --line:#2a3b3d;
+  --accent:#5cc1b9; --accent-ink:#072220; --accent-soft:#1b3a38;
+  --warn:#f0a77f; --warn-soft:#3b2519; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--ink); font:16px/1.5 var(--font);
+  padding-block:28px 56px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+.app{max-width:1120px;margin:0 auto;display:grid;gap:24px}
+h1{font-size:1.75rem;line-height:1.2;margin:0;text-wrap:balance}
+h2{font-size:1.125rem;margin:0;line-height:1.3}
+.sub{color:var(--muted);margin:4px 0 0}
+.eyebrow{font-size:.8125rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 6px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.stat .k{font-size:.8125rem;color:var(--muted)}
+.stat .v{font-size:1.625rem;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.25;overflow-wrap:anywhere}
+.stat .v small{font-size:.9rem;font-weight:400;color:var(--muted)}
+.main{display:grid;gap:24px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:920px){.main{grid-template-columns:minmax(300px,360px) minmax(0,1fr);align-items:start}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px}
+form.card{padding:18px;display:grid;gap:14px}
+.f{display:grid;gap:5px;min-width:0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{font-size:.9375rem;font-weight:700}
+label .opt{font-weight:400;color:var(--muted)}
+input,select{
+  font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);
+  border-radius:8px;padding:10px 12px;min-height:44px;width:100%;min-width:0;
+}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+button{font:inherit;cursor:pointer;border-radius:8px;min-height:44px;padding:8px 16px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:700;flex:1 1 auto}
+button.small{min-height:36px;padding:4px 12px;font-size:.9375rem}
+button.danger{color:var(--warn);border-color:var(--warn)}
+button[disabled]{opacity:.55;cursor:default}
+.status{min-height:1.5em;font-size:.9375rem;color:var(--muted)}
+.status.err{color:var(--warn)}
+.note{background:var(--warn-soft);color:var(--warn);border-radius:8px;padding:10px 12px;font-size:.9375rem}
+.listhead{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:16px 16px 12px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.tools select{width:auto;min-width:11rem}
+.row{
+  display:grid;grid-template-columns:6.25rem minmax(0,1fr) minmax(0,1.5fr) 4.75rem 5.5rem auto;
+  gap:12px;align-items:start;padding:12px 16px;border-top:1px solid var(--line);
+}
+.row.head{font-size:.8125rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding-block:8px;background:var(--bg)}
+.row > div{min-width:0;overflow-wrap:anywhere}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.muted{color:var(--muted);font-size:.9375rem}
+.c-act{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap}
+.date{font-variant-numeric:tabular-nums}
+.empty{padding:32px 20px 36px;border-top:1px solid var(--line);text-align:left;max-width:52ch}
+.empty p{margin:6px 0 0;color:var(--muted)}
+.sumwrap{overflow-x:auto}
+table.sum{border-collapse:collapse;width:100%;min-width:420px}
+table.sum th,table.sum td{padding:9px 16px;border-top:1px solid var(--line);text-align:left;font-weight:400}
+table.sum th{font-size:.8125rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);background:var(--bg)}
+table.sum td.num,table.sum th.num{text-align:right}
+table.sum td:first-child{font-weight:700}
+@media (max-width:760px){
+  .stats{grid-template-columns:1fr 1fr}
+  .stats .stat:first-child{grid-column:1 / -1}
+  .row{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"date km" "who spese" "what what" "act act";row-gap:4px}
+  .row.head{display:none}
+  .c-date{grid-area:date}.c-who{grid-area:who}.c-what{grid-area:what;margin-top:4px}
+  .c-km{grid-area:km}.c-spese{grid-area:spese}.c-act{grid-area:act;justify-content:flex-start;margin-top:6px}
+  .c-date{font-weight:700}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="app">
+  <header>
+    <p class="eyebrow">Gruppi AMA · auto mutuo aiuto</p>
+    <h1>Registro Km dei volontari</h1>
+    <p class="sub">Ogni volontario inserisce i chilometri percorsi e le spese sostenute per le attività. I dati sono condivisi e si aggiornano in tempo reale.</p>
+  </header>
+
+  <section class="stats" aria-label="Totali del periodo">
+    <div class="stat"><div class="k">Km percorsi</div><div class="v" id="s-km">0 <small>km</small></div></div>
+    <div class="stat"><div class="k">Spese sostenute</div><div class="v" id="s-spese">€ 0,00</div></div>
+    <div class="stat"><div class="k">Attività registrate</div><div class="v" id="s-n">0</div></div>
+  </section>
+
+  <div class="main">
+    <form class="card" id="form" novalidate autocomplete="off">
+      <h2 id="form-title">Nuova attività</h2>
+      <div class="f"><label for="f-operatore">Operatore</label><input id="f-operatore" list="dl-operatori" required placeholder="Nome e cognome"></div>
+      <div class="f"><label for="f-gruppo">Gruppo</label><input id="f-gruppo" list="dl-gruppi" required placeholder="Es. gruppo di Thiene"></div>
+      <div class="f"><label for="f-data">Data</label><input id="f-data" type="date" required></div>
+      <div class="f"><label for="f-motivo">Motivo attività</label><input id="f-motivo" list="dl-motivi" required placeholder="Es. incontro di gruppo, formazione"></div>
+      <div class="f"><label for="f-partenza">Luogo di partenza</label><input id="f-partenza" required placeholder="Es. Castelcucco"></div>
+      <div class="f"><label for="f-dest">Luogo di destinazione</label><input id="f-dest" required placeholder="Es. Bassano del Grappa"></div>
+      <div class="two">
+        <div class="f"><label for="f-km">Km percorsi</label><input id="f-km" type="number" inputmode="decimal" min="0" step="0.1" required placeholder="0"></div>
+        <div class="f"><label for="f-spese">Spese (€) <span class="opt">facoltativo</span></label><input id="f-spese" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0,00"></div>
+      </div>
+      <datalist id="dl-operatori"></datalist><datalist id="dl-gruppi"></datalist><datalist id="dl-motivi"></datalist>
+      <div class="btns">
+        <button class="primary" type="submit" id="btn-save">Registra attività</button>
+        <button type="button" id="btn-cancel" hidden>Annulla</button>
+      </div>
+      <div class="status" id="status" role="status" aria-live="polite"></div>
+      <div class="note" id="ro-note" hidden>Puoi consultare il registro ma non inserire dati. Chiedi a chi gestisce il registro di darti l'accesso come collaboratore.</div>
+    </form>
+
+    <div style="display:grid;gap:24px;min-width:0">
+      <section class="card" aria-label="Registro attività">
+        <div class="listhead">
+          <h2>Registro attività</h2>
+          <div class="tools">
+            <label for="month" style="font-weight:400" class="muted">Periodo</label>
+            <select id="month"></select>
+            <button type="button" id="btn-csv" class="small">Esporta CSV</button>
+          </div>
+        </div>
+        <div id="loadnote" class="note" style="margin:0 16px 12px" hidden></div>
+        <div class="row head" aria-hidden="true">
+          <div>Data</div><div>Operatore</div><div>Attività</div><div class="num">Km</div><div class="num">Spese</div><div></div>
+        </div>
+        <div id="list"></div>
+      </section>
+
+      <section class="card" id="sum-card" aria-label="Riepilogo per operatore" hidden>
+        <div class="listhead" style="padding-bottom:12px"><h2>Riepilogo per operatore</h2></div>
+        <div class="sumwrap"><table class="sum"><thead><tr><th>Operatore</th><th class="num">Attività</th><th class="num">Km</th><th class="num">Spese</th></tr></thead><tbody id="sum-body"></tbody></table></div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var esc = function(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); };
+  var nf = new Intl.NumberFormat('it-IT', {maximumFractionDigits:1});
+  var cf = new Intl.NumberFormat('it-IT', {style:'currency', currency:'EUR'});
+  var fmtKm = function(n){ return nf.format(n); };
+  var fmtDate = function(iso){ var p = String(iso||'').split('-'); return p.length === 3 ? p[2]+'/'+p[1]+'/'+p[0] : ''; };
+
+  var col = null, uid = null, canAdmin = false, canWrite = true;
+  var downloads = null;
+  var entries = [], loaded = false, confirmed = false;
+  var editingId = null, confirmId = null, month = '__init__', saving = false;
+
+  function lsGet(k){ try { return localStorage.getItem(k) || ''; } catch(e){ return ''; } }
+  function lsSet(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
+
+  function todayIso(){
+    var d = new Date();
+    return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  }
+  function monthLabel(ym){
+    var p = ym.split('-');
+    var s = new Date(+p[0], +p[1]-1, 1).toLocaleDateString('it-IT', {month:'long', year:'numeric'});
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  }
+  function setStatus(msg, err){ var s = $('status'); s.textContent = msg || ''; s.className = 'status' + (err ? ' err' : ''); }
+
+  function visible(){
+    return month === '' ? entries : entries.filter(function(e){ return String(e.data||'').slice(0,7) === month; });
+  }
+  function sorted(list){
+    return list.slice().sort(function(a,b){
+      if (a.data !== b.data) return a.data < b.data ? 1 : -1;
+      return String(b.creato||'') < String(a.creato||'') ? -1 : 1;
+    });
+  }
+  function canTouch(e){ return canWrite && (canAdmin || (uid && e.by === uid) || !e.by); }
+
+  function renderMonths(){
+    var set = {}; entries.forEach(function(e){ if (e.data) set[String(e.data).slice(0,7)] = 1; });
+    var cur = todayIso().slice(0,7); set[cur] = 1;
+    var keys = Object.keys(set).sort().reverse();
+    if (month === '__init__') {
+      var hasCur = entries.some(function(e){ return String(e.data||'').slice(0,7) === cur; });
+      month = hasCur ? cur : '';
+    }
+    var sel = $('month');
+    sel.innerHTML = '<option value="">Tutti i periodi</option>' + keys.map(function(k){
+      return '<option value="'+esc(k)+'"'+(k === month ? ' selected' : '')+'>'+esc(monthLabel(k))+'</option>';
+    }).join('');
+    sel.value = month;
+  }
+
+  function renderLists(){
+    function uniq(f){ var m = {}; entries.forEach(function(e){ if (e[f]) m[e[f]] = 1; }); return Object.keys(m).sort(function(a,b){ return a.localeCompare(b,'it'); }); }
+    function opts(a){ return a.map(function(v){ return '<option value="'+esc(v)+'"></option>'; }).join(''); }
+    $('dl-operatori').innerHTML = opts(uniq('operatore'));
+    $('dl-gruppi').innerHTML = opts(uniq('gruppo'));
+    $('dl-motivi').innerHTML = opts(uniq('motivo'));
+  }
+
+  function render(){
+    renderMonths(); renderLists();
+    var list = sorted(visible());
+    var km = 0, sp = 0;
+    list.forEach(function(e){ km += +e.km || 0; sp += +e.spese || 0; });
+    $('s-km').innerHTML = esc(fmtKm(km)) + ' <small>km</small>';
+    $('s-spese').textContent = cf.format(sp);
+    $('s-n').textContent = String(list.length);
+    $('btn-csv').disabled = list.length === 0 || !downloads;
+    if (!downloads) $('btn-csv').hidden = true;
+
+    var box = $('list');
+    if (!list.length) {
+      box.innerHTML = '<div class="empty"><h2>' + (loaded ? (entries.length ? 'Nessuna attività in questo periodo' : 'Nessuna attività registrata') : 'Caricamento del registro…') + '</h2>' +
+        (loaded ? '<p>' + (entries.length ? 'Scegli un altro periodo oppure registra una nuova attività con il modulo.' : 'Compila il modulo con operatore, gruppo, data, tratta e chilometri: la prima attività comparirà qui.') + '</p>' : '') + '</div>';
+    } else {
+      box.innerHTML = list.map(function(e){
+        var touch = canTouch(e);
+        var acts = '';
+        if (touch) {
+          if (confirmId === e.id) {
+            acts = '<button class="small danger" data-act="del-yes" data-id="'+esc(e.id)+'">Conferma eliminazione</button><button class="small" data-act="del-no" data-id="'+esc(e.id)+'">Annulla</button>';
+          } else {
+            acts = '<button class="small" data-act="edit" data-id="'+esc(e.id)+'">Modifica</button><button class="small" data-act="del" data-id="'+esc(e.id)+'">Elimina</button>';
+          }
+        }
+        return '<div class="row">' +
+          '<div class="c-date date">'+esc(fmtDate(e.data))+'</div>' +
+          '<div class="c-who"><strong>'+esc(e.operatore)+'</strong><div class="muted">'+esc(e.gruppo)+'</div></div>' +
+          '<div class="c-what"><strong>'+esc(e.motivo)+'</strong><div class="muted">'+esc(e.partenza)+' → '+esc(e.destinazione)+'</div></div>' +
+          '<div class="c-km num">'+esc(fmtKm(+e.km||0))+' km</div>' +
+          '<div class="c-spese num">'+((+e.spese) ? esc(cf.format(+e.spese)) : '<span class="muted">—</span>')+'</div>' +
+          '<div class="c-act">'+acts+'</div></div>';
+      }).join('');
+    }
+
+    var byOp = {};
+    list.forEach(function(e){
+      var o = byOp[e.operatore] || (byOp[e.operatore] = {n:0, km:0, sp:0});
+      o.n++; o.km += +e.km || 0; o.sp += +e.spese || 0;
+    });
+    var names = Object.keys(byOp).sort(function(a,b){ return byOp[b].km - byOp[a].km; });
+    $('sum-card').hidden = names.length === 0;
+    $('sum-body').innerHTML = names.map(function(n){
+      var o = byOp[n];
+      return '<tr><td>'+esc(n)+'</td><td class="num">'+o.n+'</td><td class="num">'+esc(fmtKm(o.km))+'</td><td class="num">'+esc(cf.format(o.sp))+'</td></tr>';
+    }).join('');
+  }
+
+  function resetForm(keepWho){
+    editingId = null;
+    $('form-title').textContent = 'Nuova attività';
+    $('btn-save').textContent = 'Registra attività';
+    $('btn-cancel').hidden = true;
+    ['f-motivo','f-partenza','f-dest','f-km','f-spese'].forEach(function(id){ $(id).value = ''; });
+    if (!keepWho) { $('f-operatore').value = lsGet('km.operatore'); $('f-gruppo').value = lsGet('km.gruppo'); }
+    if (!$('f-data').value) $('f-data').value = todayIso();
+  }
+
+  function startEdit(e){
+    editingId = e.id;
+    $('form-title').textContent = 'Modifica attività';
+    $('btn-save').textContent = 'Salva modifiche';
+    $('btn-cancel').hidden = false;
+    $('f-operatore').value = e.operatore || ''; $('f-gruppo').value = e.gruppo || '';
+    $('f-data').value = e.data || todayIso(); $('f-motivo').value = e.motivo || '';
+    $('f-partenza').value = e.partenza || ''; $('f-dest').value = e.destinazione || '';
+    $('f-km').value = e.km == null ? '' : e.km; $('f-spese').value = e.spese ? e.spese : '';
+    setStatus('');
+    $('form').scrollIntoView({behavior:'smooth', block:'start'});
+    $('f-motivo').focus();
+  }
+
+  function trimmed(id){ return $(id).value.trim(); }
+
+  async function onSubmit(ev){
+    ev.preventDefault();
+    if (saving) return;
+    if (!col) { setStatus('Archivio non disponibile in questa visualizzazione.', true); return; }
+    if (!$('form').checkValidity()) { $('form').reportValidity(); return; }
+    var km = parseFloat($('f-km').value);
+    var sp = $('f-spese').value === '' ? 0 : parseFloat($('f-spese').value);
+    if (!(km >= 0) || !(sp >= 0)) { setStatus('Km e spese devono essere numeri positivi.', true); return; }
+    var rec = {
+      operatore: trimmed('f-operatore'), gruppo: trimmed('f-gruppo'), data: $('f-data').value,
+      motivo: trimmed('f-motivo'), partenza: trimmed('f-partenza'), destinazione: trimmed('f-dest'),
+      km: Math.round(km*10)/10, spese: Math.round(sp*100)/100
+    };
+    saving = true; $('btn-save').disabled = true; setStatus('Salvataggio…');
+    try {
+      if (editingId) {
+        await col.doc(editingId).update(rec);
+        setStatus('Modifiche salvate.');
+      } else {
+        rec.by = uid; rec.creato = new Date().toISOString();
+        await col.add(rec);
+        setStatus('Attività registrata.');
+      }
+      lsSet('km.operatore', rec.operatore); lsSet('km.gruppo', rec.gruppo);
+      resetForm(true);
+    } catch(e) {
+      var code = e && e.code;
+      setStatus(code === 'invalid_argument' ? 'Non hai il permesso di scrivere in questo registro.' :
+                code === 'quota_exceeded' ? 'Il registro ha raggiunto il limite di righe.' :
+                'Salvataggio non riuscito. Controlla la connessione e riprova.', true);
+    } finally { saving = false; $('btn-save').disabled = false; }
+  }
+
+  async function onListClick(ev){
+    var b = ev.target.closest('button[data-act]'); if (!b) return;
+    var id = b.getAttribute('data-id'), act = b.getAttribute('data-act');
+    var e = entries.filter(function(x){ return x.id === id; })[0];
+    if (act === 'edit' && e) startEdit(e);
+    else if (act === 'del') { confirmId = id; render(); }
+    else if (act === 'del-no') { confirmId = null; render(); }
+    else if (act === 'del-yes' && col) {
+      b.disabled = true;
+      try { await col.doc(id).delete(); confirmId = null; if (editingId === id) resetForm(true); }
+      catch(err){ setStatus('Eliminazione non riuscita.', true); confirmId = null; render(); }
+    }
+  }
+
+  function csvCell(v){
+    var s = String(v == null ? '' : v);
+    return /[";\n\r]/.test(s) ? '"' + s.replace(/"/g,'""') + '"' : s;
+  }
+  async function exportCsv(){
+    if (!downloads) return;
+    var list = visible().slice().sort(function(a,b){ return a.data < b.data ? -1 : a.data > b.data ? 1 : 0; });
+    var num = function(n){ return String(n).replace('.', ','); };
+    var rows = [['Operatore','Gruppo','Data','Motivo Attività','Luogo Partenza','Luogo Destinazione','KM percorsi','Spese sostenute']];
+    list.forEach(function(e){
+      rows.push([e.operatore, e.gruppo, fmtDate(e.data), e.motivo, e.partenza, e.destinazione, num(+e.km||0), num((+e.spese||0).toFixed(2))]);
+    });
+    var text = '﻿' + rows.map(function(r){ return r.map(csvCell).join(';'); }).join('\r\n');
+    try {
+      await downloads.save({filename: 'km-volontari' + (month ? '-' + month : '') + '.csv', data: text});
+      setStatus('File CSV salvato.');
+    } catch(e) {
+      if (!e || e.code !== 'declined') setStatus('Non è stato possibile salvare il file.', true);
+    }
+  }
+
+  $('form').addEventListener('submit', onSubmit);
+  $('btn-cancel').addEventListener('click', function(){ resetForm(false); setStatus(''); });
+  $('list').addEventListener('click', onListClick);
+  $('month').addEventListener('change', function(){ month = $('month').value; confirmId = null; render(); });
+  $('btn-csv').addEventListener('click', exportCsv);
+
+  resetForm(false);
+  render();
+
+  async function init(){
+    var c = window.claude;
+    if (!c || !c.use) { $('loadnote').hidden = false; $('loadnote').textContent = 'Archivio non disponibile in questa visualizzazione.'; loaded = true; render(); return; }
+    var db = null, user = null;
+    try { db = await c.use('db'); } catch(e){}
+    try { user = await c.use('user'); } catch(e){}
+    try { downloads = await c.use('downloads'); } catch(e){}
+    if (user) {
+      try { uid = await user.id(); } catch(e){}
+      try { canAdmin = !!(await user.canEdit()); } catch(e){}
+      try { var w = await user.can('data.write'); canWrite = w !== false; } catch(e){}
+    }
+    if (!canWrite) {
+      $('ro-note').hidden = false;
+      Array.prototype.forEach.call($('form').querySelectorAll('input,button'), function(el){ el.disabled = true; });
+    }
+    if (!db) {
+      loaded = true; $('loadnote').hidden = false;
+      $('loadnote').textContent = 'Archivio non disponibile in questa visualizzazione. Accedi a Claude per usare il registro.';
+      render(); return;
+    }
+    col = db.collection('km');
+    var timer = setTimeout(function(){
+      if (!confirmed) { $('loadnote').hidden = false; $('loadnote').textContent = 'Non riesco a raggiungere l\'archivio. I dati mostrati potrebbero non essere aggiornati.'; }
+    }, 10000);
+    col.orderBy('data', 'desc').limit(1000).onSnapshot(function(snap){
+      entries = snap.docs.map(function(d){ var o = d.data() || {}; o.id = d.id; return o; });
+      loaded = true;
+      if (!snap.metadata.fromCache) { confirmed = true; clearTimeout(timer); $('loadnote').hidden = true; }
+      render();
+    }, function(err){
+      clearTimeout(timer); loaded = true;
+      $('loadnote').hidden = false;
+      $('loadnote').textContent = 'Non hai accesso ai dati di questo registro.';
+      render();
+    });
+  }
+  init();
+})();
+</script>
+
+</body></html>
